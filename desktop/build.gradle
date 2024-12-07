@@ -1,10 +1,11 @@
+import Dependencies
 
 buildscript {
   repositories {
     gradlePluginPortal()
   }
   dependencies {
-    classpath "io.github.fourlastor:construo:1.5.1"
+    classpath(Dependencies.CONSTRUO)
   }
 }
 plugins {
@@ -23,10 +24,10 @@ mainClassName = 'dev.enbinjoy.warmoji.desktop.DesktopLauncher'
 application.setMainClass(mainClassName)
 
 dependencies {
-  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-  implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-  implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-  implementation project(':core')
+  implementation(project(":core"))
+  implementation(Dependencies.GDX_BACKEND_LWJGL3)
+  implementation(Dependencies.GDX_PLATFORM_NATIVES_DESKTOP)
+  implementation(Dependencies.GDX_FREETYPE_PLATFORM_NATIVES_DESKTOP)
 }
 
 def os = System.properties['os.name'].toLowerCase()
