@@ -23,9 +23,7 @@ Useful Gradle tasks and flags:
 - `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
 - `android:lint`: performs Android project validation.
 - `build`: builds sources and archives of every project.
-- `cleanIdea`: removes IntelliJ project data.
 - `clean`: removes `build` folders, which store compiled classes and built archives.
-- `idea`: generates IntelliJ project data.
 - `desktop:jar`: builds application's runnable jar, which can be found at `desktop/build/libs`.
 - `desktop:run`: starts the application.
 - `test`: runs unit tests (if any).
