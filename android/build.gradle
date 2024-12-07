@@ -1,11 +1,5 @@
 import Dependencies
 
-buildscript {
-  repositories {
-    mavenCentral()
-    google()
-  }
-}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
@@ -41,11 +35,6 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-}
-
-repositories {
-  // needed for AAPT2, may be needed for other tools
-  google()
 }
 
 configurations { natives }
