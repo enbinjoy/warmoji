@@ -12,7 +12,7 @@ java.toolchain.languageVersion.set(JavaLanguageVersion.of(BuildConfig.JAVA_VERSI
 
 android {
   namespace BuildConfig.ID
-  compileSdk 34
+  compileSdk 35
   sourceSets {
     main {
       assets.setSrcDirs(['../assets'])
@@ -28,14 +28,11 @@ android {
   }
   defaultConfig {
     applicationId BuildConfig.ID
-    minSdkVersion 19
-    targetSdkVersion 34
+    minSdkVersion 30
+    targetSdkVersion 35
     versionCode BuildConfig.VERSION_CODE
     versionName BuildConfig.VERSION
     multiDexEnabled true
-  }
-  compileOptions {
-    coreLibraryDesugaringEnabled true
   }
   buildTypes {
     release {
@@ -53,7 +50,6 @@ repositories {
 configurations { natives }
 
 dependencies {
-  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
   implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
   implementation project(':core')
 
