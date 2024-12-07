@@ -1,6 +1,11 @@
 object BuildConfig {
+    const val SHORT_ID = "warmoji"
+    const val ID = "dev.enbinjoy.$SHORT_ID"
+
     const val VERSION = "0.0.1"
     const val VERSION_CODE = 1
+
+    const val NAME = "WarMoji"
 
     const val JAVA_VERSION = 21
 
