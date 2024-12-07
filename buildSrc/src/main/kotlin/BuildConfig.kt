@@ -1,4 +1,7 @@
 object BuildConfig {
+    const val VERSION = "0.0.1"
+    const val VERSION_CODE = 1
+
     const val JAVA_VERSION = 21
 
     // https://github.com/adoptium/temurin21-binaries

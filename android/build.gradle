@@ -30,8 +30,8 @@ android {
     applicationId 'dev.enbinjoy.warmoji'
     minSdkVersion 19
     targetSdkVersion 34
-    versionCode 1
-    versionName "1.0"
+    versionCode BuildConfig.VERSION_CODE
+    versionName BuildConfig.VERSION
     multiDexEnabled true
   }
   compileOptions {

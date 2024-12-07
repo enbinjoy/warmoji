@@ -16,7 +16,6 @@ buildscript {
 }
 
 subprojects {
-  version = '$projectVersion'
   ext.appName = 'warmoji'
   repositories {
     mavenCentral()
