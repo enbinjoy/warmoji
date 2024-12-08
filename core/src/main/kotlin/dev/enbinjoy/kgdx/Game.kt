@@ -2,7 +2,9 @@ package dev.enbinjoy.kgdx
 
 import com.badlogic.gdx.ApplicationListener
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Disposable
+import com.badlogic.gdx.utils.ScreenUtils
 import dev.enbinjoy.kgdx.Scene.Companion.dispose
 import dev.enbinjoy.kgdx.Scene.Companion.pause
 import dev.enbinjoy.kgdx.Scene.Companion.render
@@ -48,6 +50,7 @@ abstract class Game : ApplicationListener, Disposable {
             resumed = true
             sceneList?.resume()
         }
+        ScreenUtils.clear(Color.CLEAR)
         sceneList?.render(Gdx.graphics.deltaTime)
     }
 
