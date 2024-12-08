@@ -3,6 +3,7 @@ package dev.enbinjoy.warmoji.engine
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import dev.enbinjoy.warmoji.warMoji
+import kotlin.random.Random
 
 fun WarEngine.newPlayer(): Entity {
     return entity {
@@ -17,6 +18,30 @@ fun WarEngine.newPlayer(): Entity {
         }
         component<SpeedComponent> {
             value = 4f
+        }
+        component<DirectionComponent> {
+            x = 0f
+            y = 0f
+        }
+        component<TextureComponent> {
+            value = warMoji.openMojiManager.textureList.random()
+        }
+    }
+}
+
+fun WarEngine.newEnemy(): Entity {
+    return entity {
+        component<EnemyComponent>()
+        component<PositionComponent> {
+            x = Random.nextFloat() * columns
+            y = Random.nextFloat() * rows
+        }
+        component<SizeComponent> {
+            width = 1f
+            height = 1f
+        }
+        component<SpeedComponent> {
+            value = 3f
         }
         component<DirectionComponent> {
             x = 0f

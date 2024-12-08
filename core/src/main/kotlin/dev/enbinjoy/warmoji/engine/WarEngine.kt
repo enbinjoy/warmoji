@@ -5,8 +5,11 @@ import dev.enbinjoy.kgdx.Scene
 import dev.enbinjoy.warmoji.engine.system.BackgroundRenderSystem
 import dev.enbinjoy.warmoji.engine.system.CameraSystem
 import dev.enbinjoy.warmoji.engine.system.DebugRenderSystem
+import dev.enbinjoy.warmoji.engine.system.EnemyAISystem
+import dev.enbinjoy.warmoji.engine.system.EnemySpawnSystem
 import dev.enbinjoy.warmoji.engine.system.InputSystem
 import dev.enbinjoy.warmoji.engine.system.MovementSystem
+import dev.enbinjoy.warmoji.engine.system.PlayerEnemyCollisionSystem
 import dev.enbinjoy.warmoji.engine.system.TextureRenderSystem
 
 class WarEngine : PooledEngine(), Scene {
@@ -21,7 +24,10 @@ class WarEngine : PooledEngine(), Scene {
         newPlayer()
 
         addSystem(InputSystem())
+        addSystem(EnemyAISystem())
         addSystem(MovementSystem())
+        addSystem(PlayerEnemyCollisionSystem())
+        addSystem(EnemySpawnSystem())
         addSystem(CameraSystem())
         addSystem(BackgroundRenderSystem())
         addSystem(TextureRenderSystem())
