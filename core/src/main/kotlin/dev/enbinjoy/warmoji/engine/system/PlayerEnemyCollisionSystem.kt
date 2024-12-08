@@ -28,7 +28,7 @@ class PlayerEnemyCollisionSystem : WarSystem() {
             val enemyPosition = Mappers.position.require(enemy)
             val enemySize = Mappers.size.require(enemy)
             if (MathUtils.checkCollision(playerPosition, playerSize, enemyPosition, enemySize)) {
-                warEngine.removeEntity(enemy)
+                warEngine.newWar()
             }
         }
     }

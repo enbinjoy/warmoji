@@ -1,5 +1,6 @@
 package dev.enbinjoy.warmoji.engine
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.PooledEngine
 import dev.enbinjoy.kgdx.Scene
 import dev.enbinjoy.warmoji.engine.system.BackgroundRenderSystem
@@ -23,6 +24,10 @@ class WarEngine : PooledEngine(), Scene {
     val columns: Int = COLUMNS
 
     init {
+        addEntitiesAndSystems()
+    }
+
+    private fun addEntitiesAndSystems() {
         newPlayer()
 
         addSystem(InputSystem())
@@ -36,6 +41,18 @@ class WarEngine : PooledEngine(), Scene {
         addSystem(BackgroundRenderSystem())
         addSystem(TextureRenderSystem())
         addSystem(DebugRenderSystem())
+    }
+
+    private fun removeEntitiesAndSystems() {
+        removeAllSystems()
+        removeAllEntities()
+    }
+
+    fun newWar() {
+        postRunnable {
+            removeEntitiesAndSystems()
+            addEntitiesAndSystems()
+        }
     }
 
     private var resized: Boolean = false
@@ -65,6 +82,8 @@ class WarEngine : PooledEngine(), Scene {
 
     override fun render(deltaTime: Float) {
         update(deltaTime)
+        postRunnableList.forEach { it() }
+        postRunnableList.clear()
     }
 
     override fun pause() {
@@ -75,10 +94,20 @@ class WarEngine : PooledEngine(), Scene {
     }
 
     override fun dispose() {
-        removeAllSystems()
-        removeAllEntities()
-
+        removeEntitiesAndSystems()
         renderer.dispose()
+    }
+
+    private val postRunnableList: MutableList<() -> Unit> = mutableListOf()
+
+    fun postRunnable(runnable: () -> Unit) {
+        postRunnableList.add(runnable)
+    }
+
+    fun postRemoveEntity(entity: Entity) {
+        postRunnable {
+            removeEntity(entity)
+        }
     }
 
     companion object {

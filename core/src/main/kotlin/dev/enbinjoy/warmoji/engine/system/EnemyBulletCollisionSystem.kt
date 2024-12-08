@@ -29,8 +29,8 @@ class EnemyBulletCollisionSystem : WarSystem() {
                 val bulletPosition = Mappers.position.require(bullet)
                 val bulletSize = Mappers.size.require(bullet)
                 if (MathUtils.checkCollision(enemyPosition, enemySize, bulletPosition, bulletSize)) {
-                    warEngine.removeEntity(enemy)
-                    warEngine.removeEntity(bullet)
+                    warEngine.postRemoveEntity(enemy)
+                    warEngine.postRemoveEntity(bullet)
                 }
             }
         }

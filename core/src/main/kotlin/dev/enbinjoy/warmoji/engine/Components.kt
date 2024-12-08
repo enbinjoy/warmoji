@@ -29,6 +29,14 @@ class SizeComponent : Component {
     var height: Float = 0f
 }
 
+class AttackSpeedComponent: Component {
+    var value: Float = 0f
+}
+
+class AttackRangeComponent: Component {
+    var value: Float = 0f
+}
+
 class SpeedComponent : Component {
     var value: Float = 0f
 }
@@ -45,6 +53,8 @@ class TextureComponent : Component {
 object Mappers {
     val position: ComponentMapper<PositionComponent> = ComponentMapper.getFor(PositionComponent::class.java)
     val size: ComponentMapper<SizeComponent> = ComponentMapper.getFor(SizeComponent::class.java)
+    val attackSpeed: ComponentMapper<AttackSpeedComponent> = ComponentMapper.getFor(AttackSpeedComponent::class.java)
+    val attackRange: ComponentMapper<AttackRangeComponent> = ComponentMapper.getFor(AttackRangeComponent::class.java)
     val speed: ComponentMapper<SpeedComponent> = ComponentMapper.getFor(SpeedComponent::class.java)
     val direction: ComponentMapper<DirectionComponent> = ComponentMapper.getFor(DirectionComponent::class.java)
     val texture: ComponentMapper<TextureComponent> = ComponentMapper.getFor(TextureComponent::class.java)

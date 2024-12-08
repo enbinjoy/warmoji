@@ -17,6 +17,12 @@ fun WarEngine.newPlayer(): Entity {
             width = 1f
             height = 1f
         }
+        component<AttackSpeedComponent> {
+            value = 1f
+        }
+        component<AttackRangeComponent> {
+            value = 5f
+        }
         component<SpeedComponent> {
             value = 4f
         }

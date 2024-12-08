@@ -46,7 +46,7 @@ class MovementSystem : WarSystem() {
                         position.y = position.y.coerceIn(minPositionY, maxPositionY)
                     }
                     PositionComponent.OutOfBoundsBehavior.REMOVE -> {
-                        warEngine.removeEntity(entity)
+                        warEngine.postRemoveEntity(entity)
                     }
                 }
             }
