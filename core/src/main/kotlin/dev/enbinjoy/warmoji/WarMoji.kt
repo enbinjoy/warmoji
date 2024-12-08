@@ -1,16 +1,20 @@
 package dev.enbinjoy.warmoji
 
-import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 import com.mazatech.gdx.SVGAssetsConfigGDX
 import com.mazatech.gdx.SVGAssetsGDX
+import dev.enbinjoy.kgdx.Game
+import dev.enbinjoy.kgdx.game
 import java.util.zip.ZipInputStream
 import kotlin.math.roundToInt
 
-class WarMoji : ApplicationAdapter() {
+val warMoji: WarMoji
+    get() = game as WarMoji
+
+class WarMoji : Game() {
     private lateinit var spriteBatch: SpriteBatch
     private lateinit var texture: Texture
 
