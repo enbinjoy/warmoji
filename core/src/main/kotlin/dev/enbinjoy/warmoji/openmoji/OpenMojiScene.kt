@@ -1,17 +1,13 @@
 package dev.enbinjoy.warmoji.openmoji
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
-import com.mazatech.gdx.SVGAssetsConfigGDX
-import com.mazatech.gdx.SVGAssetsGDX
 import dev.enbinjoy.kgdx.Scene
-import java.util.zip.ZipInputStream
+import dev.enbinjoy.warmoji.warMoji
 import kotlin.math.ceil
-import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class OpenMojiScene : Scene {
@@ -26,8 +22,6 @@ class OpenMojiScene : Scene {
         )
     }
 
-    private val textureList: List<Texture> = createTextureList()
-
     private val camera: OrthographicCamera = OrthographicCamera()
 
     private val batch: SpriteBatch = SpriteBatch()
@@ -36,7 +30,7 @@ class OpenMojiScene : Scene {
 
     override fun resize(width: Int, height: Int) {
         camera.setToOrtho(true, width.toFloat(), height.toFloat())
-        renderData = createRenderData(textureList, width, height)
+        renderData = createRenderData(width, height)
     }
 
     override fun resume() {
@@ -57,37 +51,14 @@ class OpenMojiScene : Scene {
 
     override fun dispose() {
         batch.dispose()
-        textureList.forEach { it.dispose() }
     }
 
     companion object {
-        private fun createTextureList(): List<Texture> {
-            val textureMap = sortedMapOf<String, Texture>()
-            val svgAssetsConfigGDX = SVGAssetsConfigGDX(Gdx.graphics.backBufferWidth, Gdx.graphics.backBufferHeight,
-                Gdx.graphics.ppiX)
-            val svgAssetsGDX = SVGAssetsGDX(svgAssetsConfigGDX)
-            val zipFileHandle = Gdx.files.internal("openmoji-svg-color.zip")
-            ZipInputStream(zipFileHandle.read(DEFAULT_BUFFER_SIZE)).use { zipInputStream ->
-                while (true) {
-                    val zipEntry = zipInputStream.nextEntry ?: break
-                    val hexcode = zipEntry.name.removeSuffix(".svg")
-                    val xmlText = zipInputStream.bufferedReader().readText()
-                    zipInputStream.closeEntry()
-                    val svgDocument = svgAssetsGDX.createDocument(xmlText)
-                    val texture = svgAssetsGDX.createTexture(svgDocument, svgDocument.viewport.width.roundToInt(),
-                        svgDocument.viewport.height.roundToInt())
-                    svgDocument.dispose()
-                    textureMap[hexcode] = texture
-                }
-            }
-            svgAssetsGDX.dispose()
-            return textureMap.values.toList()
-        }
-
-        private fun createRenderData(textureList: List<Texture>, width: Int, height: Int): RenderData {
+        private fun createRenderData(width: Int, height: Int): RenderData {
             if (width <= 0 || height <= 0) {
                 return RenderData(0f, emptyList())
             }
+            val textureList = warMoji.openMojiManager.textureList
             var columns = ceil(sqrt(textureList.size.toFloat() / height * width)).toInt() - 1
             var rows: Int
             do {
