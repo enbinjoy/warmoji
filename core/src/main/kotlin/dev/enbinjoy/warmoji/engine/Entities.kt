@@ -11,6 +11,7 @@ fun WarEngine.newPlayer(): Entity {
         component<PositionComponent> {
             x = columns / 2f
             y = rows / 2f
+            outOfBoundsBehavior = PositionComponent.OutOfBoundsBehavior.CLAMP
         }
         component<SizeComponent> {
             width = 1f
@@ -35,6 +36,7 @@ fun WarEngine.newEnemy(): Entity {
         component<PositionComponent> {
             x = Random.nextFloat() * columns
             y = Random.nextFloat() * rows
+            outOfBoundsBehavior = PositionComponent.OutOfBoundsBehavior.CLAMP
         }
         component<SizeComponent> {
             width = 1f
@@ -53,6 +55,36 @@ fun WarEngine.newEnemy(): Entity {
     }
 }
 
+fun WarEngine.newBullet(
+    positionX: Float,
+    positionY: Float,
+    directionX: Float,
+    directionY: Float,
+): Entity {
+    return entity {
+        component<BulletComponent>()
+        component<PositionComponent> {
+            x = positionX
+            y = positionY
+            outOfBoundsBehavior = PositionComponent.OutOfBoundsBehavior.REMOVE
+        }
+        component<SizeComponent> {
+            width = 0.5f
+            height = 0.5f
+        }
+        component<SpeedComponent> {
+            value = 12f
+        }
+        component<DirectionComponent> {
+            x = directionX
+            y = directionY
+        }
+        component<TextureComponent> {
+            value = warMoji.openMojiManager.textureList.random()
+        }
+    }
+}
+
 private fun WarEngine.entity(configure: Pair<WarEngine, Entity>.() -> Unit = {}): Entity {
     val entity = createEntity()
     val pair = this to entity
@@ -63,8 +95,7 @@ private fun WarEngine.entity(configure: Pair<WarEngine, Entity>.() -> Unit = {})
 
 private inline fun <reified T : Component> Pair<WarEngine, Entity>.component(configure: T.() -> Unit = {}): T {
     val (engine, entity) = this
-    val component = engine.createComponent(T::class.java)
-    component.configure()
+    val component = engine.component<T>(configure)
     entity.add(component)
     return component
 }

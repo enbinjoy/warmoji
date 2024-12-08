@@ -2,6 +2,7 @@ package dev.enbinjoy.warmoji.engine
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Texture
 
@@ -9,9 +10,18 @@ object PlayerComponent : Component
 
 object EnemyComponent : Component
 
+object BulletComponent : Component
+
 class PositionComponent : Component {
     var x: Float = 0f
     var y: Float = 0f
+    lateinit var outOfBoundsBehavior: OutOfBoundsBehavior
+
+    enum class OutOfBoundsBehavior {
+        CLAMP,
+        REMOVE,
+        ;
+    }
 }
 
 class SizeComponent : Component {
@@ -42,4 +52,10 @@ object Mappers {
 
 fun <T : Component> ComponentMapper<T>.require(entity: Entity): T {
     return requireNotNull(get(entity))
+}
+
+inline fun <reified T : Component> Engine.component(configure: T.() -> Unit = {}): T {
+    val component = createComponent(T::class.java)
+    component.configure()
+    return component
 }

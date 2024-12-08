@@ -29,14 +29,27 @@ class MovementSystem : WarSystem() {
             val speed = Mappers.speed.require(entity)
             val direction = Mappers.direction.require(entity)
             val size = Mappers.size.get(entity)
+            position.x += direction.x * speed.value * deltaTime
+            position.y += direction.y * speed.value * deltaTime
             val halfWidth = size?.width?.div(2f) ?: 0f
             val halfHeight = size?.height?.div(2f) ?: 0f
-            val minX = halfWidth
-            val maxX = warEngine.columns - halfWidth
-            val minY = halfHeight
-            val maxY = warEngine.rows - halfHeight
-            position.x = (position.x + direction.x * speed.value * deltaTime).coerceIn(minX, maxX)
-            position.y = (position.y + direction.y * speed.value * deltaTime).coerceIn(minY, maxY)
+            val minPositionX = halfWidth
+            val maxPositionX = warEngine.columns - halfWidth
+            val minPositionY = halfHeight
+            val maxPositionY = warEngine.rows - halfHeight
+            val isOutOfBounds = position.x < minPositionX || position.x > maxPositionX ||
+                position.y < minPositionY || position.y > maxPositionY
+            if (isOutOfBounds) {
+                when (position.outOfBoundsBehavior) {
+                    PositionComponent.OutOfBoundsBehavior.CLAMP -> {
+                        position.x = position.x.coerceIn(minPositionX, maxPositionX)
+                        position.y = position.y.coerceIn(minPositionY, maxPositionY)
+                    }
+                    PositionComponent.OutOfBoundsBehavior.REMOVE -> {
+                        warEngine.removeEntity(entity)
+                    }
+                }
+            }
         }
     }
 }

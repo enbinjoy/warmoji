@@ -3,9 +3,11 @@ package dev.enbinjoy.warmoji.engine
 import com.badlogic.ashley.core.PooledEngine
 import dev.enbinjoy.kgdx.Scene
 import dev.enbinjoy.warmoji.engine.system.BackgroundRenderSystem
+import dev.enbinjoy.warmoji.engine.system.BulletSpawnSystem
 import dev.enbinjoy.warmoji.engine.system.CameraSystem
 import dev.enbinjoy.warmoji.engine.system.DebugRenderSystem
 import dev.enbinjoy.warmoji.engine.system.EnemyAISystem
+import dev.enbinjoy.warmoji.engine.system.EnemyBulletCollisionSystem
 import dev.enbinjoy.warmoji.engine.system.EnemySpawnSystem
 import dev.enbinjoy.warmoji.engine.system.InputSystem
 import dev.enbinjoy.warmoji.engine.system.MovementSystem
@@ -27,7 +29,9 @@ class WarEngine : PooledEngine(), Scene {
         addSystem(EnemyAISystem())
         addSystem(MovementSystem())
         addSystem(PlayerEnemyCollisionSystem())
+        addSystem(EnemyBulletCollisionSystem())
         addSystem(EnemySpawnSystem())
+        addSystem(BulletSpawnSystem())
         addSystem(CameraSystem())
         addSystem(BackgroundRenderSystem())
         addSystem(TextureRenderSystem())
