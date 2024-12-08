@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.Disposable
 import com.mazatech.gdx.SVGAssetsConfigGDX
 import com.mazatech.gdx.SVGAssetsGDX
-import dev.enbinjoy.kgdx.utils.fromJson
+import dev.enbinjoy.kgdx.util.fromJson
 import java.util.zip.ZipInputStream
 import kotlin.math.roundToInt
 

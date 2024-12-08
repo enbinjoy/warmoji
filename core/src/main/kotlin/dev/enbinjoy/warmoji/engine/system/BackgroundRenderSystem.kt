@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import dev.enbinjoy.kgdx.utils.copy
+import dev.enbinjoy.kgdx.util.copy
 import dev.enbinjoy.warmoji.engine.warEngine
 import dev.enbinjoy.warmoji.warMoji
 import kotlin.random.Random

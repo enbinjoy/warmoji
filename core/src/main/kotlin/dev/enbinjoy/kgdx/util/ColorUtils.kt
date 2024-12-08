@@ -1,4 +1,4 @@
-package dev.enbinjoy.kgdx.utils
+package dev.enbinjoy.kgdx.util
 
 import com.badlogic.gdx.graphics.Color
 
