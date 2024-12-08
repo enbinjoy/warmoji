@@ -48,11 +48,10 @@ class WarEngine : PooledEngine(), Scene {
         removeAllEntities()
     }
 
+    private var newWar: Boolean = false
+
     fun newWar() {
-        postRunnable {
-            removeEntitiesAndSystems()
-            addEntitiesAndSystems()
-        }
+        newWar = true
     }
 
     private var resized: Boolean = false
@@ -80,10 +79,30 @@ class WarEngine : PooledEngine(), Scene {
         }
     }
 
+    val tickDeltaTime: Float = TICK_DELTA_TIME
+
+    private var tickAccumulator: Float = 0f
+
+    var isTick: Boolean = false
+        private set
+
     override fun render(deltaTime: Float) {
-        update(deltaTime)
+        val limitedDeltaTime = deltaTime.coerceAtMost(LIMITED_DELTA_TIME)
+        tickAccumulator += limitedDeltaTime
+        isTick = if (tickAccumulator >= tickDeltaTime) {
+            tickAccumulator -= tickDeltaTime
+            true
+        } else {
+            false
+        }
+        update(limitedDeltaTime)
         postRunnableList.forEach { it() }
         postRunnableList.clear()
+        if (newWar) {
+            newWar = false
+            removeEntitiesAndSystems()
+            addEntitiesAndSystems()
+        }
     }
 
     override fun pause() {
@@ -113,5 +132,8 @@ class WarEngine : PooledEngine(), Scene {
     companion object {
         private const val ROWS = 25
         private const val COLUMNS = 25
+
+        private const val LIMITED_DELTA_TIME = 1f / 30f
+        private const val TICK_DELTA_TIME = 1f / 30f
     }
 }

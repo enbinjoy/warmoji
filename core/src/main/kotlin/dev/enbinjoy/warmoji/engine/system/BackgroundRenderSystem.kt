@@ -42,8 +42,17 @@ class BackgroundRenderSystem : WarSystem() {
         this.tileList = tileList
     }
 
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
+    override fun updateWithTick() {
+        super.updateWithTick()
+        internalUpdate()
+    }
+
+    override fun updateWithoutTick(deltaTime: Float) {
+        super.updateWithoutTick(deltaTime)
+        internalUpdate()
+    }
+
+    private fun internalUpdate() {
         warEngine.renderer.useShape(
             type = ShapeRenderer.ShapeType.Filled,
             color = backgroundColor,

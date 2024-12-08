@@ -24,6 +24,25 @@ abstract class WarSystem : EntitySystem() {
     protected open fun removedFromEngine() {
     }
 
+    final override fun update(deltaTime: Float) {
+        super.update(deltaTime)
+        if (warEngine.isTick) {
+            tick(warEngine.tickDeltaTime)
+            updateWithTick()
+        } else {
+            updateWithoutTick(deltaTime)
+        }
+    }
+
+    protected open fun tick(tickDeltaTime: Float) {
+    }
+
+    protected open fun updateWithTick() {
+    }
+
+    protected open fun updateWithoutTick(deltaTime: Float) {
+    }
+
     open fun resize(width: Float, height: Float) {
     }
 

@@ -21,8 +21,17 @@ class DebugRenderSystem : WarSystem() {
         ).get())
     }
 
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
+    override fun updateWithTick() {
+        super.updateWithTick()
+        internalUpdate()
+    }
+
+    override fun updateWithoutTick(deltaTime: Float) {
+        super.updateWithoutTick(deltaTime)
+        internalUpdate()
+    }
+
+    private fun internalUpdate() {
         warEngine.renderer.useShape(
             color = Color.CYAN,
         ) {
@@ -30,6 +39,7 @@ class DebugRenderSystem : WarSystem() {
                 val position = Mappers.position.require(entity)
                 val size = Mappers.size.require(entity)
                 rect(position.x - size.width / 2f, position.y - size.height / 2f, size.width, size.height)
+                rect(position.renderX - size.width / 2f, position.renderY - size.height / 2f, size.width, size.height)
             }
         }
     }

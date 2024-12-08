@@ -19,11 +19,20 @@ class CameraSystem : WarSystem() {
         warEngine.viewport.camera.update()
     }
 
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
+    override fun updateWithTick() {
+        super.updateWithTick()
+        internalUpdate()
+    }
+
+    override fun updateWithoutTick(deltaTime: Float) {
+        super.updateWithoutTick(deltaTime)
+        internalUpdate()
+    }
+
+    private fun internalUpdate() {
         val playerPosition = Mappers.position.require(player)
-        warEngine.viewport.camera.position.x = playerPosition.x
-        warEngine.viewport.camera.position.y = playerPosition.y
+        warEngine.viewport.camera.position.x = playerPosition.renderX
+        warEngine.viewport.camera.position.y = playerPosition.renderY
         warEngine.viewport.camera.update()
     }
 }

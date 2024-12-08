@@ -5,9 +5,9 @@ import dev.enbinjoy.warmoji.engine.newEnemy
 import kotlin.random.Random
 
 class EnemySpawnSystem : WarSystem() {
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
-        if (Random.nextFloat() < deltaTime) {
+    override fun tick(tickDeltaTime: Float) {
+        super.tick(tickDeltaTime)
+        if (Random.nextFloat() < tickDeltaTime) {
             warEngine.newEnemy()
         }
     }

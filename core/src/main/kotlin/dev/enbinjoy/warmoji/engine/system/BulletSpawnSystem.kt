@@ -28,9 +28,9 @@ class BulletSpawnSystem : WarSystem() {
     private var time: Float = 0f
     private var lastSpawnTime: Float = 0f
 
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
-        time += deltaTime
+    override fun tick(tickDeltaTime: Float) {
+        super.tick(tickDeltaTime)
+        time += tickDeltaTime
         val playerAttackSpeed = Mappers.attackSpeed.require(player)
         if (time - lastSpawnTime < playerAttackSpeed.value) return
         val playerPosition = Mappers.position.require(player)

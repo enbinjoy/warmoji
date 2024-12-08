@@ -22,15 +22,15 @@ class MovementSystem : WarSystem() {
         ).get())
     }
 
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
+    override fun tick(tickDeltaTime: Float) {
+        super.tick(tickDeltaTime)
         entityArray.forEach { entity ->
             val position = Mappers.position.require(entity)
             val speed = Mappers.speed.require(entity)
             val direction = Mappers.direction.require(entity)
             val size = Mappers.size.get(entity)
-            position.x += direction.x * speed.value * deltaTime
-            position.y += direction.y * speed.value * deltaTime
+            position.x += direction.x * speed.value * tickDeltaTime
+            position.y += direction.y * speed.value * tickDeltaTime
             val halfWidth = size?.width?.div(2f) ?: 0f
             val halfHeight = size?.height?.div(2f) ?: 0f
             val minPositionX = halfWidth
@@ -48,6 +48,37 @@ class MovementSystem : WarSystem() {
                     PositionComponent.OutOfBoundsBehavior.REMOVE -> {
                         warEngine.postRemoveEntity(entity)
                     }
+                }
+            }
+            position.renderX = position.x
+            position.renderY = position.y
+        }
+    }
+
+    override fun updateWithoutTick(deltaTime: Float) {
+        super.updateWithoutTick(deltaTime)
+        entityArray.forEach { entity ->
+            val position = Mappers.position.require(entity)
+            val speed = Mappers.speed.require(entity)
+            val direction = Mappers.direction.require(entity)
+            val size = Mappers.size.get(entity)
+            position.renderX += direction.x * speed.value * deltaTime
+            position.renderY += direction.y * speed.value * deltaTime
+            val halfWidth = size?.width?.div(2f) ?: 0f
+            val halfHeight = size?.height?.div(2f) ?: 0f
+            val minPositionX = halfWidth
+            val maxPositionX = warEngine.columns - halfWidth
+            val minPositionY = halfHeight
+            val maxPositionY = warEngine.rows - halfHeight
+            val isOutOfBounds = position.renderX < minPositionX || position.renderX > maxPositionX ||
+                position.renderY < minPositionY || position.renderY > maxPositionY
+            if (isOutOfBounds) {
+                when (position.outOfBoundsBehavior) {
+                    PositionComponent.OutOfBoundsBehavior.CLAMP -> {
+                        position.renderX = position.renderX.coerceIn(minPositionX, maxPositionX)
+                        position.renderY = position.renderY.coerceIn(minPositionY, maxPositionY)
+                    }
+                    PositionComponent.OutOfBoundsBehavior.REMOVE -> Unit
                 }
             }
         }

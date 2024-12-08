@@ -22,8 +22,17 @@ class TextureRenderSystem : WarSystem() {
         ).get())
     }
 
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
+    override fun updateWithTick() {
+        super.updateWithTick()
+        internalUpdate()
+    }
+
+    override fun updateWithoutTick(deltaTime: Float) {
+        super.updateWithoutTick(deltaTime)
+        internalUpdate()
+    }
+
+    private fun internalUpdate() {
         warEngine.renderer.useBatch {
             entityArray.forEach { entity ->
                 val position = Mappers.position.require(entity)
@@ -31,8 +40,8 @@ class TextureRenderSystem : WarSystem() {
                 val texture = Mappers.texture.require(entity)
                 val halfWidth = size.width / 2f
                 val halfHeight = size.height / 2f
-                draw(texture.value, position.x - halfWidth, position.y - halfHeight, size.width, size.height, 0, 0,
-                    texture.value.width, texture.value.height, false, true)
+                draw(texture.value, position.renderX - halfWidth, position.renderY - halfHeight, size.width,
+                    size.height, 0, 0, texture.value.width, texture.value.height, false, true)
             }
         }
     }

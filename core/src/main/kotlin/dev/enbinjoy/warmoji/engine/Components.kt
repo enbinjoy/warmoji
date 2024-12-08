@@ -16,6 +16,8 @@ class PositionComponent : Component {
     var x: Float = 0f
     var y: Float = 0f
     lateinit var outOfBoundsBehavior: OutOfBoundsBehavior
+    var renderX: Float = 0f
+    var renderY: Float = 0f
 
     enum class OutOfBoundsBehavior {
         CLAMP,

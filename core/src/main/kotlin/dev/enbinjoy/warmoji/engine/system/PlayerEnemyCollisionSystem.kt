@@ -20,8 +20,8 @@ class PlayerEnemyCollisionSystem : WarSystem() {
         enemyArray = warEngine.getEntitiesFor(Family.all(EnemyComponent::class.java).get())
     }
 
-    override fun update(deltaTime: Float) {
-        super.update(deltaTime)
+    override fun tick(tickDeltaTime: Float) {
+        super.tick(tickDeltaTime)
         val playerPosition = Mappers.position.require(player)
         val playerSize = Mappers.size.require(player)
         enemyArray.forEach { enemy ->

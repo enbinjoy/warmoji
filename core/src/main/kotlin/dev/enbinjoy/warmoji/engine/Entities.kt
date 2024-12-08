@@ -12,6 +12,8 @@ fun WarEngine.newPlayer(): Entity {
             x = columns / 2f
             y = rows / 2f
             outOfBoundsBehavior = PositionComponent.OutOfBoundsBehavior.CLAMP
+            renderX = x
+            renderY = y
         }
         component<SizeComponent> {
             width = 1f
@@ -43,6 +45,8 @@ fun WarEngine.newEnemy(): Entity {
             x = Random.nextFloat() * columns
             y = Random.nextFloat() * rows
             outOfBoundsBehavior = PositionComponent.OutOfBoundsBehavior.CLAMP
+            renderX = x
+            renderY = y
         }
         component<SizeComponent> {
             width = 1f
@@ -73,6 +77,8 @@ fun WarEngine.newBullet(
             x = positionX
             y = positionY
             outOfBoundsBehavior = PositionComponent.OutOfBoundsBehavior.REMOVE
+            renderX = x
+            renderY = y
         }
         component<SizeComponent> {
             width = 0.5f
