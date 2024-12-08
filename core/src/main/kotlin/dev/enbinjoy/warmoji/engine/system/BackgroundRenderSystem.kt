@@ -44,19 +44,20 @@ class BackgroundRenderSystem : WarSystem() {
 
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
-        warEngine.shapeRenderer.projectionMatrix = warEngine.viewport.camera.combined
-        warEngine.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
-        warEngine.shapeRenderer.color = backgroundColor
-        warEngine.shapeRenderer.rect(0f, 0f, warEngine.columns.toFloat(), warEngine.rows.toFloat())
-        warEngine.shapeRenderer.end()
-        warEngine.batch.projectionMatrix = warEngine.viewport.camera.combined
-        warEngine.batch.begin()
-        warEngine.batch.color = Color.WHITE.copy(a = EMOJI_ALPHA)
-        tileList.forEach { tile ->
-            warEngine.batch.draw(tile.texture, tile.x, tile.y, 0.5f, 0.5f, 1f, 1f, tile.scale, tile.scale,
-                tile.rotation, 0, 0, tile.texture.width, tile.texture.height, false, true)
+        warEngine.renderer.useShape(
+            type = ShapeRenderer.ShapeType.Filled,
+            color = backgroundColor,
+        ) {
+            rect(0f, 0f, warEngine.columns.toFloat(), warEngine.rows.toFloat())
         }
-        warEngine.batch.end()
+        warEngine.renderer.useBatch(
+            color = Color.WHITE.copy(a = EMOJI_ALPHA),
+        ) {
+            tileList.forEach { tile ->
+                draw(tile.texture, tile.x, tile.y, 0.5f, 0.5f, 1f, 1f, tile.scale, tile.scale, tile.rotation, 0, 0,
+                    tile.texture.width, tile.texture.height, false, true)
+            }
+        }
     }
 
     companion object {

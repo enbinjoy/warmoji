@@ -1,8 +1,6 @@
 package dev.enbinjoy.warmoji.engine
 
 import com.badlogic.ashley.core.PooledEngine
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import dev.enbinjoy.kgdx.Scene
 import dev.enbinjoy.warmoji.engine.system.BackgroundRenderSystem
 import dev.enbinjoy.warmoji.engine.system.CameraSystem
@@ -13,12 +11,10 @@ import dev.enbinjoy.warmoji.engine.system.TextureRenderSystem
 class WarEngine : PooledEngine(), Scene {
     val viewport: WarViewport = WarViewport()
 
+    val renderer: WarRenderer = WarRenderer(viewport)
+
     val rows: Int = ROWS
     val columns: Int = COLUMNS
-
-    val shapeRenderer: ShapeRenderer = ShapeRenderer()
-
-    val batch: SpriteBatch = SpriteBatch()
 
     init {
         newPlayer()
@@ -70,8 +66,7 @@ class WarEngine : PooledEngine(), Scene {
         removeAllSystems()
         removeAllEntities()
 
-        batch.dispose()
-        shapeRenderer.dispose()
+        renderer.dispose()
     }
 
     companion object {
