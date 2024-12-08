@@ -1,23 +1,21 @@
 package dev.enbinjoy.warmoji.engine.system
 
-import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import dev.enbinjoy.warmoji.engine.DirectionComponent
 import dev.enbinjoy.warmoji.engine.Mappers
 import dev.enbinjoy.warmoji.engine.PositionComponent
 import dev.enbinjoy.warmoji.engine.SpeedComponent
+import dev.enbinjoy.warmoji.engine.WarSystem
 import dev.enbinjoy.warmoji.engine.require
-import dev.enbinjoy.warmoji.engine.warEngine
 
-class MovementSystem : EntitySystem() {
+class MovementSystem : WarSystem() {
     private lateinit var entityArray: ImmutableArray<Entity>
 
-    override fun addedToEngine(engine: Engine) {
-        super.addedToEngine(engine)
-        entityArray = engine.getEntitiesFor(Family.all(
+    override fun addedToEngine() {
+        super.addedToEngine()
+        entityArray = warEngine.getEntitiesFor(Family.all(
             PositionComponent::class.java,
             SpeedComponent::class.java,
             DirectionComponent::class.java,

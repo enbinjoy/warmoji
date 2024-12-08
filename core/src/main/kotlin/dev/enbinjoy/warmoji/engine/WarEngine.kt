@@ -1,6 +1,5 @@
 package dev.enbinjoy.warmoji.engine
 
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -10,9 +9,6 @@ import dev.enbinjoy.warmoji.engine.system.CameraSystem
 import dev.enbinjoy.warmoji.engine.system.InputSystem
 import dev.enbinjoy.warmoji.engine.system.MovementSystem
 import dev.enbinjoy.warmoji.engine.system.TextureRenderSystem
-
-val EntitySystem.warEngine: WarEngine
-    get() = engine as WarEngine
 
 class WarEngine : PooledEngine(), Scene {
     val viewport: WarViewport = WarViewport()
@@ -34,11 +30,29 @@ class WarEngine : PooledEngine(), Scene {
         addSystem(TextureRenderSystem())
     }
 
+    private var resized: Boolean = false
+
     override fun resize(width: Int, height: Int) {
+        val oldWidth = viewport.worldWidth
+        val oldHeight = viewport.worldHeight
         viewport.update(width, height)
+        val newWidth = viewport.worldWidth
+        val newHeight = viewport.worldHeight
+        if (resized && oldWidth == newWidth && oldHeight == newHeight) return
+        if (!resized) {
+            resized = true
+        }
+        systems.forEach { system ->
+            system as WarSystem
+            system.resize(newWidth, newHeight)
+        }
     }
 
     override fun resume() {
+        systems.forEach { system ->
+            system as WarSystem
+            system.resume()
+        }
     }
 
     override fun render(deltaTime: Float) {
@@ -46,9 +60,16 @@ class WarEngine : PooledEngine(), Scene {
     }
 
     override fun pause() {
+        systems.reversed().forEach { system ->
+            system as WarSystem
+            system.pause()
+        }
     }
 
     override fun dispose() {
+        removeAllSystems()
+        removeAllEntities()
+
         batch.dispose()
         shapeRenderer.dispose()
     }

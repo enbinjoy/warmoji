@@ -1,22 +1,21 @@
 package dev.enbinjoy.warmoji.engine.system
 
-import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import dev.enbinjoy.warmoji.engine.Mappers
 import dev.enbinjoy.warmoji.engine.PlayerComponent
+import dev.enbinjoy.warmoji.engine.WarSystem
 import dev.enbinjoy.warmoji.engine.require
 import kotlin.math.sqrt
 
-class InputSystem : EntitySystem() {
+class InputSystem : WarSystem() {
     private lateinit var player: Entity
 
-    override fun addedToEngine(engine: Engine) {
-        super.addedToEngine(engine)
-        player = engine.getEntitiesFor(Family.all(PlayerComponent::class.java).get()).single()
+    override fun addedToEngine() {
+        super.addedToEngine()
+        player = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get()).single()
     }
 
     override fun update(deltaTime: Float) {

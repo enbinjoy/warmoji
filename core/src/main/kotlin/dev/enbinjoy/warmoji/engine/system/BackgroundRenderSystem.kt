@@ -1,16 +1,14 @@
 package dev.enbinjoy.warmoji.engine.system
 
-import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import dev.enbinjoy.kgdx.util.copy
-import dev.enbinjoy.warmoji.engine.warEngine
+import dev.enbinjoy.warmoji.engine.WarSystem
 import dev.enbinjoy.warmoji.warMoji
 import kotlin.random.Random
 
-class BackgroundRenderSystem : EntitySystem() {
+class BackgroundRenderSystem : WarSystem() {
     private class Tile(
         val texture: Texture,
         val x: Float,
@@ -23,8 +21,8 @@ class BackgroundRenderSystem : EntitySystem() {
 
     private lateinit var tileList: List<Tile>
 
-    override fun addedToEngine(engine: Engine) {
-        super.addedToEngine(engine)
+    override fun addedToEngine() {
+        super.addedToEngine()
         backgroundColor = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
         val textureList = warMoji.openMojiManager.textureList.shuffled().take(EMOJI_COUNT)
         val tileList = mutableListOf<Tile>()
