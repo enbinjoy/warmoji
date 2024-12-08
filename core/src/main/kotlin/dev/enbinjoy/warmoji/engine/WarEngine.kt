@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.PooledEngine
 import dev.enbinjoy.kgdx.Scene
 import dev.enbinjoy.warmoji.engine.system.BackgroundRenderSystem
 import dev.enbinjoy.warmoji.engine.system.CameraSystem
+import dev.enbinjoy.warmoji.engine.system.DebugRenderSystem
 import dev.enbinjoy.warmoji.engine.system.InputSystem
 import dev.enbinjoy.warmoji.engine.system.MovementSystem
 import dev.enbinjoy.warmoji.engine.system.TextureRenderSystem
@@ -24,6 +25,7 @@ class WarEngine : PooledEngine(), Scene {
         addSystem(CameraSystem())
         addSystem(BackgroundRenderSystem())
         addSystem(TextureRenderSystem())
+        addSystem(DebugRenderSystem())
     }
 
     private var resized: Boolean = false

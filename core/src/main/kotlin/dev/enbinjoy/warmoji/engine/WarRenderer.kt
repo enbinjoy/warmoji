@@ -12,7 +12,7 @@ class WarRenderer(private val viewport: Viewport) : Disposable {
     private val spriteBatch: SpriteBatch = SpriteBatch()
 
     fun useShape(
-        type: ShapeRenderer.ShapeType,
+        type: ShapeRenderer.ShapeType = ShapeRenderer.ShapeType.Line,
         color: Color = Color.WHITE,
         action: ShapeRenderer.() -> Unit,
     ) {
