@@ -13,8 +13,8 @@ import dev.enbinjoy.warmoji.engine.require
 class TextureRenderSystem : WarSystem() {
     private lateinit var entityArray: ImmutableArray<Entity>
 
-    override fun addedToEngine() {
-        super.addedToEngine()
+    override fun init() {
+        super.init()
         entityArray = warEngine.getEntitiesFor(Family.all(
             PositionComponent::class.java,
             SizeComponent::class.java,

@@ -11,17 +11,18 @@ import dev.enbinjoy.warmoji.engine.WarSystem
 import dev.enbinjoy.warmoji.engine.require
 
 class EnemyAISystem : WarSystem() {
-    private lateinit var player: Entity
+    private lateinit var playerArray: ImmutableArray<Entity>
     private lateinit var enemyArray: ImmutableArray<Entity>
 
-    override fun addedToEngine() {
-        super.addedToEngine()
-        player = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get()).single()
+    override fun init() {
+        super.init()
+        playerArray = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get())
         enemyArray = warEngine.getEntitiesFor(Family.all(EnemyComponent::class.java).get())
     }
 
     override fun tick(tickDeltaTime: Float) {
         super.tick(tickDeltaTime)
+        val player = playerArray.single()
         val playerPosition = Mappers.position.require(player)
         enemyArray.forEach { enemy ->
             val enemyPosition = Mappers.position.require(enemy)

@@ -14,8 +14,8 @@ class EnemyBulletCollisionSystem : WarSystem() {
     private lateinit var enemyArray: ImmutableArray<Entity>
     private lateinit var bulletArray: ImmutableArray<Entity>
 
-    override fun addedToEngine() {
-        super.addedToEngine()
+    override fun init() {
+        super.init()
         enemyArray = warEngine.getEntitiesFor(Family.all(EnemyComponent::class.java).get())
         bulletArray = warEngine.getEntitiesFor(Family.all(BulletComponent::class.java).get())
     }

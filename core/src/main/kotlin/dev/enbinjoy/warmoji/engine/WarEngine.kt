@@ -24,13 +24,15 @@ class WarEngine : PooledEngine(), Scene {
     val rows: Int = ROWS
     val columns: Int = COLUMNS
 
+    private var started: Boolean = false
+    private var resumed: Boolean = false
+
     init {
-        addEntitiesAndSystems()
+        addAllSystems()
+        addAllEntities()
     }
 
-    private fun addEntitiesAndSystems() {
-        newPlayer()
-
+    private fun addAllSystems() {
         addSystem(InputSystem())
         addSystem(EnemyAISystem())
         addSystem(MovementSystem())
@@ -45,15 +47,14 @@ class WarEngine : PooledEngine(), Scene {
         addSystem(DevLogSystem())
     }
 
-    private fun removeEntitiesAndSystems() {
-        removeAllSystems()
-        removeAllEntities()
+    private fun addAllEntities() {
+        newPlayer()
     }
 
-    private var newWar: Boolean = false
+    private var needRestart: Boolean = false
 
-    fun newWar() {
-        newWar = true
+    fun restart() {
+        needRestart = true
     }
 
     private var resized: Boolean = false
@@ -65,16 +66,34 @@ class WarEngine : PooledEngine(), Scene {
         val newWidth = viewport.worldWidth
         val newHeight = viewport.worldHeight
         if (resized && oldWidth == newWidth && oldHeight == newHeight) return
-        if (!resized) {
+        if (resized) {
+            resize(newWidth, newHeight)
+        } else {
             resized = true
+            resize(newWidth, newHeight)
+            start()
         }
+    }
+
+    private fun resize(width: Float, height: Float) {
         systems.forEach { system ->
             system as WarSystem
-            system.resize(newWidth, newHeight)
+            system.resize(width, height)
+        }
+    }
+
+    private fun start() {
+        if (started) return
+        started = true
+        systems.forEach { system ->
+            system as WarSystem
+            system.start()
         }
     }
 
     override fun resume() {
+        if (resumed) return
+        resumed = true
         systems.forEach { system ->
             system as WarSystem
             system.resume()
@@ -100,22 +119,40 @@ class WarEngine : PooledEngine(), Scene {
         update(limitedDeltaTime)
         postRunnableList.forEach { it() }
         postRunnableList.clear()
-        if (newWar) {
-            newWar = false
-            removeEntitiesAndSystems()
-            addEntitiesAndSystems()
+        if (needRestart) {
+            needRestart = false
+            pause()
+            stop()
+            removeAllEntities()
+            addAllEntities()
+            resize(viewport.worldWidth, viewport.worldHeight)
+            start()
+            resume()
         }
     }
 
     override fun pause() {
+        if (!resumed) return
         systems.reversed().forEach { system ->
             system as WarSystem
             system.pause()
         }
+        resumed = false
+    }
+
+    private fun stop() {
+        if (!started) return
+        systems.reversed().forEach { system ->
+            system as WarSystem
+            system.stop()
+        }
+        started = false
     }
 
     override fun dispose() {
-        removeEntitiesAndSystems()
+        stop()
+        removeAllEntities()
+        removeAllSystems()
         renderer.dispose()
     }
 

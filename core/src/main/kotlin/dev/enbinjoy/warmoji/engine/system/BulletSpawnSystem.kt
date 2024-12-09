@@ -16,21 +16,28 @@ import dev.enbinjoy.warmoji.engine.require
 import kotlin.math.sqrt
 
 class BulletSpawnSystem : WarSystem() {
-    private lateinit var player: Entity
+    private lateinit var playerArray: ImmutableArray<Entity>
     private lateinit var enemyArray: ImmutableArray<Entity>
 
-    override fun addedToEngine() {
-        super.addedToEngine()
-        player = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get()).single()
+    override fun init() {
+        super.init()
+        playerArray = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get())
         enemyArray = warEngine.getEntitiesFor(Family.all(EnemyComponent::class.java).get())
     }
 
     private var time: Float = 0f
     private var lastSpawnTime: Float = 0f
 
+    override fun start() {
+        super.start()
+        time = 0f
+        lastSpawnTime = -Float.MAX_VALUE
+    }
+
     override fun tick(tickDeltaTime: Float) {
         super.tick(tickDeltaTime)
         time += tickDeltaTime
+        val player = playerArray.single()
         val playerAttackSpeed = Mappers.attackSpeed.require(player)
         if (time - lastSpawnTime < playerAttackSpeed.value) return
         val playerPosition = Mappers.position.require(player)

@@ -21,8 +21,8 @@ class BackgroundRenderSystem : WarSystem() {
 
     private lateinit var tileList: List<Tile>
 
-    override fun addedToEngine() {
-        super.addedToEngine()
+    override fun start() {
+        super.start()
         backgroundColor = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
         val textureList = warMoji.openMojiManager.textureList.shuffled().take(EMOJI_COUNT)
         val tileList = mutableListOf<Tile>()

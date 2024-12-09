@@ -2,6 +2,7 @@ package dev.enbinjoy.warmoji.engine.system
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
+import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import dev.enbinjoy.warmoji.engine.Mappers
@@ -11,11 +12,11 @@ import dev.enbinjoy.warmoji.engine.require
 import kotlin.math.sqrt
 
 class InputSystem : WarSystem() {
-    private lateinit var player: Entity
+    private lateinit var playerArray: ImmutableArray<Entity>
 
-    override fun addedToEngine() {
-        super.addedToEngine()
-        player = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get()).single()
+    override fun init() {
+        super.init()
+        playerArray = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get())
     }
 
     override fun updateWithTick() {
@@ -43,6 +44,7 @@ class InputSystem : WarSystem() {
                 Gdx.input.isTouched(0) && Gdx.input.getY(0) < Gdx.graphics.height / 3 -> 1f
             else -> 0f
         }
+        val player = playerArray.single()
         val playerDirection = Mappers.direction.require(player)
         playerDirection.x = when {
             directionX == 0f -> 0f
