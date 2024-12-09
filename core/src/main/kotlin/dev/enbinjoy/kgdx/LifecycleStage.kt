@@ -13,9 +13,11 @@ abstract class LifecycleStage : Stage, Scene {
 
     private var resized: Boolean = false
 
+    protected open val centerCameraOnResize: Boolean = true
+
     override fun resize(width: Int, height: Int) {
         diffSize {
-            viewport.update(width, height)
+            viewport.update(width, height, centerCameraOnResize)
         }
     }
 
