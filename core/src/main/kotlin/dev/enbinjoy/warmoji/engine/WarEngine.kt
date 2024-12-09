@@ -7,6 +7,7 @@ import dev.enbinjoy.warmoji.engine.system.BackgroundRenderSystem
 import dev.enbinjoy.warmoji.engine.system.BulletSpawnSystem
 import dev.enbinjoy.warmoji.engine.system.CameraSystem
 import dev.enbinjoy.warmoji.engine.system.DebugRenderSystem
+import dev.enbinjoy.warmoji.engine.system.DevLogSystem
 import dev.enbinjoy.warmoji.engine.system.EnemyAISystem
 import dev.enbinjoy.warmoji.engine.system.EnemyBulletCollisionSystem
 import dev.enbinjoy.warmoji.engine.system.EnemySpawnSystem
@@ -41,6 +42,7 @@ class WarEngine : PooledEngine(), Scene {
         addSystem(BackgroundRenderSystem())
         addSystem(TextureRenderSystem())
         addSystem(DebugRenderSystem())
+        addSystem(DevLogSystem())
     }
 
     private fun removeEntitiesAndSystems() {
