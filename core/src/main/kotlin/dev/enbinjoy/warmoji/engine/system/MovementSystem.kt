@@ -55,8 +55,9 @@ class MovementSystem : WarSystem() {
         }
     }
 
-    override fun updateWithoutTick(deltaTime: Float) {
-        super.updateWithoutTick(deltaTime)
+    override fun update(isTick: Boolean, deltaTime: Float) {
+        super.update(isTick, deltaTime)
+        if (isTick) return
         entityArray.forEach { entity ->
             val position = Mappers.position.require(entity)
             val speed = Mappers.speed.require(entity)

@@ -19,17 +19,8 @@ class InputSystem : WarSystem() {
         playerArray = warEngine.getEntitiesFor(Family.all(PlayerComponent::class.java).get())
     }
 
-    override fun updateWithTick() {
-        super.updateWithTick()
-        internalUpdate()
-    }
-
-    override fun updateWithoutTick(deltaTime: Float) {
-        super.updateWithoutTick(deltaTime)
-        internalUpdate()
-    }
-
-    private fun internalUpdate() {
+    override fun update(isTick: Boolean, deltaTime: Float) {
+        super.update(isTick, deltaTime)
         val directionX = when {
             Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) ||
                 Gdx.input.isTouched(0) && Gdx.input.getX(0) < Gdx.graphics.width / 3 -> -1f

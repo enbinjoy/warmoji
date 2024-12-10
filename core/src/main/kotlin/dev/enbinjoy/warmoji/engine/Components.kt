@@ -48,6 +48,14 @@ class DirectionComponent : Component {
     var y: Float = 0f
 }
 
+class BreathingComponent : Component {
+    var duration: Float = 0f
+    var scalePercent: Float = 0f
+    var stateTime: Float = 0f
+    var scaleX: Float = 0f
+    var scaleY: Float = 0f
+}
+
 class TextureComponent : Component {
     lateinit var value: Texture
 }
@@ -59,6 +67,7 @@ object Mappers {
     val attackRange: ComponentMapper<AttackRangeComponent> = ComponentMapper.getFor(AttackRangeComponent::class.java)
     val speed: ComponentMapper<SpeedComponent> = ComponentMapper.getFor(SpeedComponent::class.java)
     val direction: ComponentMapper<DirectionComponent> = ComponentMapper.getFor(DirectionComponent::class.java)
+    val breathing: ComponentMapper<BreathingComponent> = ComponentMapper.getFor(BreathingComponent::class.java)
     val texture: ComponentMapper<TextureComponent> = ComponentMapper.getFor(TextureComponent::class.java)
 }
 

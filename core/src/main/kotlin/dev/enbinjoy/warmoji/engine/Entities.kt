@@ -32,6 +32,13 @@ fun WarEngine.newPlayer(): Entity {
             x = 0f
             y = 0f
         }
+        component<BreathingComponent> {
+            duration = 0.25f
+            scalePercent = 0.1f
+            stateTime = 0f
+            scaleX = 0f
+            scaleY = 0f
+        }
         component<TextureComponent> {
             value = warMoji.openMojiManager.textureList.random()
         }
@@ -58,6 +65,13 @@ fun WarEngine.newEnemy(): Entity {
         component<DirectionComponent> {
             x = 0f
             y = 0f
+        }
+        component<BreathingComponent> {
+            duration = 0.25f
+            scalePercent = 0.1f
+            stateTime = 0f
+            scaleX = 0f
+            scaleY = 0f
         }
         component<TextureComponent> {
             value = warMoji.openMojiManager.textureList.random()

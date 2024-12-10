@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.PooledEngine
 import dev.enbinjoy.kgdx.Scene
 import dev.enbinjoy.warmoji.engine.system.BackgroundRenderSystem
+import dev.enbinjoy.warmoji.engine.system.BreathingSystem
 import dev.enbinjoy.warmoji.engine.system.BulletSpawnSystem
 import dev.enbinjoy.warmoji.engine.system.CameraSystem
 import dev.enbinjoy.warmoji.engine.system.DebugRenderSystem
@@ -40,6 +41,7 @@ class WarEngine : PooledEngine(), Scene {
         addSystem(EnemyBulletCollisionSystem())
         addSystem(EnemySpawnSystem())
         addSystem(BulletSpawnSystem())
+        addSystem(BreathingSystem())
         addSystem(CameraSystem())
         addSystem(BackgroundRenderSystem())
         addSystem(TextureRenderSystem())
