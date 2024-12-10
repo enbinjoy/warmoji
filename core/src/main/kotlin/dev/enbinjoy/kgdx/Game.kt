@@ -11,6 +11,7 @@ import dev.enbinjoy.kgdx.Scene.Companion.render
 import dev.enbinjoy.kgdx.Scene.Companion.resize
 import dev.enbinjoy.kgdx.Scene.Companion.resume
 import dev.enbinjoy.kgdx.asset.AssetManager
+import dev.enbinjoy.kgdx.dev.DevInfoStage
 import dev.enbinjoy.kgdx.dev.DevLogStage
 
 val game: Game
@@ -22,6 +23,7 @@ abstract class Game : ApplicationListener, Disposable {
 
     lateinit var assetManager: AssetManager
 
+    private lateinit var devInfoStage: DevInfoStage
     private lateinit var devLogStage: DevLogStage
 
     var sceneList: List<Scene>? = null
@@ -40,12 +42,14 @@ abstract class Game : ApplicationListener, Disposable {
 
     private fun sceneList(): List<Scene> {
         val sceneList = sceneList?.toMutableList() ?: mutableListOf()
+        sceneList.add(devInfoStage)
         sceneList.add(devLogStage)
         return sceneList
     }
 
     override fun create() {
         assetManager = AssetManager()
+        devInfoStage = DevInfoStage()
         devLogStage = DevLogStage()
         canRender = true
     }
@@ -79,6 +83,7 @@ abstract class Game : ApplicationListener, Disposable {
     override fun dispose() {
         sceneList = null
         devLogStage.dispose()
+        devInfoStage.dispose()
         assetManager.dispose()
     }
 
