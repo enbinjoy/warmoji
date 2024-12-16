@@ -72,8 +72,8 @@ class WarEngine : PooledEngine(), Scene {
             resize(newWidth, newHeight)
         } else {
             resized = true
-            resize(newWidth, newHeight)
             start()
+            resize(newWidth, newHeight)
         }
     }
 
@@ -127,8 +127,8 @@ class WarEngine : PooledEngine(), Scene {
             stop()
             removeAllEntities()
             addAllEntities()
-            resize(viewport.worldWidth, viewport.worldHeight)
             start()
+            resize(viewport.worldWidth, viewport.worldHeight)
             resume()
         }
     }
